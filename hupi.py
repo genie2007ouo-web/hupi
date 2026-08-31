@@ -103,19 +103,18 @@ REMIND_TIMES3 = [
 # yt-dlp 設定
 ydl_opts = {
     'format': 'bestaudio/best',
-    'quiet': True,
-    'no_warnings': True, # 屏蔽掉那些煩人的 WARNING
-    # 關鍵：強制指定只用 Bilibili 的解析器，不要亂跳 YouTube 客戶端
-    'allowed_extractors': ['bilibili.*', 'generic'], 
+    'noplaylist': True,
+    # 補上 User-Agent 避免被 Bilibili 擋 412
     'http_headers': {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-        'Accept-Language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
-        'Origin': 'https://www.bilibili.com',
         'Referer': 'https://www.bilibili.com/',
     },
-    # 這裡加入這行，強迫它不要檢查 HTTPS 證書，有時候能繞過某些阻擋
-    'nocheckcertificate': True,
+    # 建議加上偏好音訊格式設定
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
 }
 FFMPEG_OPTIONS = {
     'before_options': (
