@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 啟動機器人（假設你的主程式檔名是 main.py）
-CMD ["python", "main.py"]
+CMD ["python", "hupi.py"]
