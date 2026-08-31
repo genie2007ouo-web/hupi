@@ -16,6 +16,8 @@ intents.members = True          # 這一行絕對不能少！
 intents.message_content = True  # 讓機器人能讀取指令
 bot = commands.Bot(command_prefix='!', intents=intents)
 TOKEN = os.getenv("DISCORD_TOKEN")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+json_path = os.path.join(BASE_DIR, 'TAROT_RESPONSES.json')
 
 def parse_duration(duration):
     if duration is None: return "未知"
@@ -30,8 +32,7 @@ def parse_duration(duration):
 
 
 def load_tarot():
-    file_path = r"C:\Users\genie\dcbot\TAROT_RESPONSES.json"
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     return data
 # 全域變數：儲存每個伺服器的播放清單
