@@ -145,11 +145,8 @@ async def play_music(ctx, song_data):
     vc = ctx.voice_client
     # 關鍵：不要用 from_probe，改用 FFmpegOpusAudio 或 FFmpegPCMAudio
     # 直接手動指定路徑，並帶入我們寫好的 Headers
-    source = discord.FFmpegOpusAudio(
-        url2, 
-        executable="C:/ffmpeg/bin/ffmpeg.exe", 
-        **FFMPEG_OPTIONS
-    )
+    # 正確寫法（移除 executable 參數，讓系統使用預設路徑）
+    source = discord.FFmpegPCMAudio(url2, **FFMPEG_OPTIONS)
     
     vc.play(source, after=lambda e: check_queue(ctx))
     await ctx.send(f"🎵 正在播放: **{song_data['title']}**")
